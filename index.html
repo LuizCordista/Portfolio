@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luiz Cordista - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --catppuccin-base: #1E1E2E;
+      --catppuccin-text: #CDD6F4;
+      --catppuccin-surface: #313244;
+      --catppuccin-overlay: #585B70;
+      --catppuccin-lavender: #B4BEFE;
+      --catppuccin-blue: #89B4FA;
+      --catppuccin-sapphire: #74C7EC;
+      --catppuccin-green: #A6E3A1;
+      --catppuccin-yellow: #F9E2AF;
+      --catppuccin-peach: #FAB387;
+      --catppuccin-maroon: #F38BA8;
+      --catppuccin-pink: #F5C2E7;
+      --catppuccin-mauve: #CBA6F7;
+      --catppuccin-red: #F38BA8;
+      --catppuccin-mantle: #181825;
+      --catppuccin-crust: #11111B;
+    }
+    
+    * {
+      font-family: 'Fira Code', monospace;
+    }
+    
+    body { 
+      background-color: var(--catppuccin-base);
+      color: var(--catppuccin-text);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+    
+    .navbar { 
+      background-color: var(--catppuccin-mantle);
+      border-bottom: 1px solid var(--catppuccin-mauve);
+    }
+    
+    .navbar.scrolled { 
+      box-shadow: 0 2px 10px rgba(203, 166, 247, 0.2);
+    }
+    
+    .card { 
+      background-color: var(--catppuccin-mantle);
+      border: 1px solid var(--catppuccin-lavender);
+      position: relative;
+    }
+    
+    .card::before {
+      content: '[file]';
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      background-color: var(--catppuccin-base);
+      padding: 0 8px;
+      color: var(--catppuccin-lavender);
+      font-size: 12px;
+    }
+    
+    .card:hover { 
+      box-shadow: 0 0 10px rgba(180, 190, 254, 0.4);
+    }
+    
+    .btn { 
+      background-color: transparent;
+      color: var(--catppuccin-lavender);
+      border: 1px solid var(--catppuccin-lavender);
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover { 
+      background-color: rgba(180, 190, 254, 0.1);
+      text-shadow: 0 0 5px var(--catppuccin-lavender);
+      border-color: var(--catppuccin-mauve);
+    }
+    
+    .section-title::before {
+      content: '$ cat ';
+      opacity: 0.7;
+      color: var(--catppuccin-mauve);
+    }
+    
+    .section-title::after {
+      content: '';
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      background-color: var(--catppuccin-mauve);
+      margin-left: 5px;
+      animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    .header-bg {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(24, 24, 37, 0.15),
+        rgba(24, 24, 37, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .command-prompt::before {
+      content: '> ';
+      color: var(--catppuccin-mauve);
+    }
+    
+    .terminal-window {
+      position: relative;
+      background-color: var(--catppuccin-mantle);
+      border: 1px solid var(--catppuccin-lavender);
+      border-radius: 5px;
+      padding: 30px 15px 15px;
+    }
+    
+    .terminal-window::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--catppuccin-red);
+    }
+    
+    .terminal-window::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 30px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--catppuccin-yellow);
+    }
+    
+    .terminal-dots::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--catppuccin-green);
+    }
+    
+    a {
+      color: var(--catppuccin-blue);
+      text-decoration: none;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    
+    a:hover {
+      text-shadow: 0 0 5px var(--catppuccin-blue);
+      color: var(--catppuccin-sapphire);
+    }
+    
+    a:hover::before {
+      content: '>';
+      position: absolute;
+      left: -12px;
+      color: var(--catppuccin-mauve);
+    }
+    
+    .typing-effect {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--catppuccin-mauve);
+      margin: 0 auto;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--catppuccin-mauve) }
+    }
+
+    /* Custom Catppuccin-specific styles */
+    .border-accent {
+      border-color: var(--catppuccin-lavender);
+    }
+
+    .text-accent {
+      color: var(--catppuccin-lavender);
+    }
+
+    .text-title {
+      color: var(--catppuccin-mauve);
+    }
+
+    .text-highlight {
+      color: var(--catppuccin-pink);
+    }
+
+    /* Terminal section styles */
+    .terminal-section {
+      border-left: 2px solid var(--catppuccin-mauve);
+      padding-left: 12px;
+      margin-left: 4px;
+    }
+
+    .tag-item {
+      border: 1px solid var(--catppuccin-blue);
+      background: rgba(137, 180, 250, 0.1);
+      color: var(--catppuccin-text);
+      transition: all 0.2s ease;
+    }
+
+    .tag-item:hover {
+      background: rgba(137, 180, 250, 0.2);
+      border-color: var(--catppuccin-sapphire);
+    }
+    
+    /* Experience image container styles */
+    .experience-logo-container {
+      width: 100%;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background-color: var(--catppuccin-crust);
+      border-radius: 4px;
+    }
+    
+    @media (min-width: 768px) {
+      .experience-logo-container {
+        width: 120px;
+        height: 120px;
+      }
+    }
+    
+    .experience-logo-container img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      object-position: center;
+    }
+    
+    /* SVG logo specific adjustments */
+    .experience-logo-container img[src$=".svg"] {
+      padding: 10px;
+    }
+    
+    /* Mobile Responsiveness Improvements */
+    @media (max-width: 768px) {
+      .terminal-window {
+        padding: 25px 12px 12px;
+      }
+      
+      .typing-effect {
+        white-space: normal;
+        animation: none;
+        border-right: none;
+      }
+      
+      h1.text-4xl {
+        font-size: 1.75rem;
+        line-height: 2.25rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+      
+      #mobile-menu {
+        background-color: var(--catppuccin-mantle);
+        border-bottom: 1px solid var(--catppuccin-lavender);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      #mobile-menu a {
+        display: block;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--catppuccin-surface);
+      }
+      
+      #mobile-menu a:last-child {
+        border-bottom: none;
+      }
+      
+      /* Improve contact buttons on mobile */
+      #contact .flex {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      #contact .btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+      /* Better spacing for experience cards */
+      .terminal-window .gap-6 {
+        gap: 1rem;
+      }
+      
+      /* Improve image display on mobile */
+      img.w-full.md\:w-48 {
+        max-height: 120px;
+        object-fit: contain;
+        margin: 0 auto;
+      }
+    }
+    
+    /* Small mobile screens */
+    @media (max-width: 480px) {
+      body {
+        font-size: 13px;
+      }
+      
+      .terminal-window::before,
+      .terminal-window::after,
+      .terminal-dots::before {
+        width: 10px;
+        height: 10px;
+      }
+      
+      .terminal-window {
+        padding-top: 22px;
+      }
+      
+      h1.text-4xl {
+        font-size: 1.5rem;
+      }
+      
+      .py-16 {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+      
+      .py-24 {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+      
+      .pt-36 {
+        padding-top: 8rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Navigation -->
+  <nav class="navbar fixed top-0 w-full py-4 z-50">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold text-title">&lt;LuizCordista/&gt;</h1>
+      <div class="space-x-6 hidden md:block">
+        <a href="#about">about.me</a>
+        <a href="#experience">experience.log</a>
+        <a href="#projects">projects.json</a>
+        <a href="#contact">contact.sh</a>
+      </div>
+      <!-- Mobile menu -->
+      <div class="md:hidden">
+        <button id="mobile-menu-btn" class="text-accent px-3 py-1 border border-accent rounded hover:bg-accent hover:bg-opacity-10 transition-all">$ menu</button>
+      </div>
+    </div>
+    <!-- Mobile menu content -->
+    <div id="mobile-menu" class="hidden container mx-auto px-4 py-2 flex flex-col transition-all duration-300 opacity-0 transform -translate-y-2" style="max-height: 0; overflow: hidden;">
+      <a href="#about" class="py-2">about.me</a>
+      <a href="#experience" class="py-2">experience.log</a>
+      <a href="#projects" class="py-2">projects.json</a>
+      <a href="#contact" class="py-2">contact.sh</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="header-bg relative bg-black text-accent py-24 pt-36 min-h-screen flex items-center">
+    <div class="container mx-auto px-4 text-left" data-aos="fade-in">
+      <div class="terminal-window terminal-dots max-w-3xl mx-auto w-full">
+        <p id="current-datetime" class="text-gray-500 mb-4">Last login: Wed Apr 17 10:23:41 2025</p>
+        <div class="command-prompt mb-4">whoami</div>
+        <div class="typing-effect mb-6">
+          <h1 class="text-4xl font-bold mb-2 text-title">Luiz Cordista</h1>
+          <p class="text-xl opacity-80">Software Engineer</p>
+        </div>
+        <div class="command-prompt mb-4">cat skills.txt</div>
+        <div class="flex flex-wrap gap-3 mb-6">
+          <span class="tag-item px-3 py-1 text-sm">Distributed Systems</span>
+          <span class="tag-item px-3 py-1 text-sm">API Design</span>
+          <span class="tag-item px-3 py-1 text-sm">AI</span>
+          <span class="tag-item px-3 py-1 text-sm">Cloud Services</span>
+          <span class="tag-item px-3 py-1 text-sm">Java Spring</span>
+          <span class="tag-item px-3 py-1 text-sm">React/Next.js</span>
+          <span class="tag-item px-3 py-1 text-sm">Docker</span>
+        </div>
+        <div class="command-prompt mb-2">help</div>
+        <p class="text-sm opacity-80">Scroll down to navigate through sections...</p>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Experience -->
+  <section id="experience" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title text-3xl font-bold mb-8 text-title">experience.log</h2>
+      <div class="max-w-3xl mx-auto space-y-8">
+        <div class="terminal-window terminal-dots" data-aos="fade-up">
+          <div class="command-prompt mb-4">cat experience/ci-and-t.log</div>
+          <div class="flex flex-col md:flex-row gap-6">
+            <div class="flex justify-center">
+              <img src="ciandt.png" alt="CI&T Logo" class="w-full md:w-48 h-auto max-h-28 object-contain border border-accent p-2">
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-highlight">Software Engineering Intern - CI&T</h3>
+              <p class="opacity-70">Mar 2025 - Present · <span id="ciandt-duration">2 months</span></p>
+              <p class="mt-4 opacity-90">Remote work on software development projects, collaborating with agile teams and applying engineering best practices.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="terminal-window terminal-dots" data-aos="fade-up" data-aos-delay="100">
+          <div class="command-prompt mb-4">cat experience/r2-esthetics.log</div>
+          <div class="flex flex-col md:flex-row gap-6">
+            <div>
+              <h3 class="text-xl font-bold text-highlight">Software Engineer - R2 ESTHETICS</h3>
+              <p class="opacity-70">Jun 2024 - Feb 2025 · 9 months</p>
+              <p class="opacity-70">Belo Horizonte, Minas Gerais, Brazil · On-site</p>
+              <div class="mt-4 opacity-90 space-y-3">
+                <div class="bg-catppuccin-surface bg-opacity-50 p-3 border-l-2 border-accent">
+                  <p class="font-bold text-title mb-1">Context:</p>
+                  <p>Sole IT responsible; identified the need to replace manual sales (WhatsApp) with a secure digital catalog, hiding prices for unapproved users.</p>
+                </div>
+                <div class="bg-catppuccin-surface bg-opacity-50 p-3 border-l-2 border-accent">
+                  <p class="font-bold text-title mb-1">Task:</p>
+                  <p>Build a scalable e-commerce platform with granular authentication, shopping cart, and high performance.</p>
+                </div>
+                <div class="bg-catppuccin-surface bg-opacity-50 p-3 border-l-2 border-accent">
+                  <p class="font-bold text-title mb-1">Action:</p>
+                  <p>Developed frontend (Next.js, React, TypeScript) with conditional price rendering and backend (Java Spring, JWT, API REST). Stored images in Amazon S3 and containerized with Docker for scalability.</p>
+                </div>
+                <div class="bg-catppuccin-surface bg-opacity-50 p-3 border-l-2 border-accent">
+                  <p class="font-bold text-title mb-1">Result:</p>
+                  <p>Platform generates over R$120k/day, supports 4k+ daily visits, and significantly reduced order processing time.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title text-3xl font-bold mb-8 text-title">projects.json</h2>
+      <div class="max-w-3xl mx-auto">
+        <div class="terminal-window terminal-dots" data-aos="fade-up">
+          <div class="command-prompt mb-4">cat projects/pr-generator.json | jq</div>
+          <div class="bg-catppuccin-surface bg-opacity-50 p-4 border-l-2 border-accent">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div>
+                <p class="font-bold text-title">Name:</p>
+                <p>PR Generator</p>
+              </div>
+              <div>
+                <p class="font-bold text-title">Link:</p>
+                <a href="https://github.com/LuizCordista/pr-generator" target="_blank" class="underline">GitHub Repo</a>
+              </div>
+            </div>
+            <div>
+              <p class="font-bold text-title mb-2">Description:</p>
+              <p class="leading-relaxed">
+                PR Generator is a CLI tool leveraging artificial intelligence to auto-generate 
+                Pull Request and conventional commit messages from code changes (git diff). 
+                Available on GitHub, it streamlines development with clear, standardized messages.
+              </p>
+            </div>
+            <a href="https://github.com/LuizCordista/pr-generator" target="_blank" class="mt-4 inline-flex items-center btn px-4 py-2">
+              git clone https://github.com/LuizCordista/pr-generator
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="section-title text-3xl font-bold mb-8 text-title">contact.sh</h2>
+      <div class="terminal-window terminal-dots max-w-3xl mx-auto" data-aos="fade-up">
+        <div class="command-prompt mb-4">./contact.sh</div>
+        <p class="mb-6 opacity-80">Script initiated. Specify contact method:</p>
+        <div class="flex flex-wrap justify-center gap-4 md:space-x-6">
+          <a href="https://github.com/LuizCordista" target="_blank" class="btn px-6 py-3 w-full sm:w-auto">
+            ssh git@github.com/LuizCordista
+          </a>
+          <a href="https://www.linkedin.com/in/luizcordista/" target="_blank" class="btn px-6 py-3 w-full sm:w-auto">
+            connect --linkedin LuizCordista
+          </a>
+          <button id="copy-email" class="btn px-6 py-3 w-full sm:w-auto" data-email="luizcordista@gmail.com">
+            copy --email luizcordista@gmail.com
+          </button>
+        </div>
+        <div id="copy-notification" class="mt-4 opacity-0 transition-opacity duration-300 text-center text-accent">
+          Email copied to clipboard!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 border-t border-accent">
+    <div class="container mx-auto px-4 text-center">
+      <p class="command-prompt">echo "© 2025 Luiz Cordista. All rights reserved."</p>
+      <div class="mt-4 flex justify-center space-x-6">
+        <a href="https://github.com/LuizCordista" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/luizcordista/" target="_blank">LinkedIn</a>
+        <a href="javascript:void(0);" id="copy-email-footer" data-email="luizcordista@gmail.com" class="text-catppuccin-blue cursor-pointer hover:text-catppuccin-sapphire">Email</a>
+      </div>
+      <div id="copy-notification-footer" class="mt-2 opacity-0 transition-opacity duration-300 text-center text-accent text-sm">
+        Email copied to clipboard!
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 600, once: true });
+
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Mobile menu toggle with animação suave
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+        // Pequeno delay para permitir que a transição funcione
+        setTimeout(() => {
+          mobileMenu.style.maxHeight = '200px';
+          mobileMenu.style.opacity = '1';
+          mobileMenu.style.transform = 'translateY(0)';
+        }, 10);
+      } else {
+        mobileMenu.style.maxHeight = '0';
+        mobileMenu.style.opacity = '0';
+        mobileMenu.style.transform = 'translateY(-8px)';
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+        }, 300);
+      }
+    });
+    
+    // Fechar menu ao clicar em um link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.style.maxHeight = '0';
+        mobileMenu.style.opacity = '0';
+        mobileMenu.style.transform = 'translateY(-8px)';
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+        }, 300);
+      });
+    });
+    
+    // Add typing effect to pre-elements
+    document.querySelectorAll('pre').forEach(pre => {
+      pre.style.opacity = '0.9';
+    });
+
+    // Função para exibir data e hora atual em tempo real
+    function updateCurrentDateTime() {
+      const now = new Date();
+      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      const day = daysOfWeek[now.getDay()];
+      const month = monthsOfYear[now.getMonth()];
+      const date = now.getDate();
+      
+      // Formatação da hora no estilo de terminal (HH:MM:SS)
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+      
+      // Adicionar zeros à esquerda quando necessário
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+      
+      const year = now.getFullYear();
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      
+      // Atualizar o elemento HTML com a data e hora formatadas como um login de terminal
+      document.getElementById('current-datetime').textContent = `Last login: ${day} ${month} ${date} ${timeString} ${year}`;
+    }
+    
+    // Atualizar data e hora imediatamente e depois a cada segundo
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCurrentDateTime(); // Executa imediatamente
+      setInterval(updateCurrentDateTime, 1000); // Atualiza a cada 1 segundo
+    });
+
+    // Calculate duration of CI&T employment
+    function calculateDuration() {
+      // Data de início na CI&T (março de 2025)
+      const startDate = new Date(2025, 2, 1); // Meses em JavaScript são baseados em zero (0-11)
+      const currentDate = new Date();
+      
+      // Calcular diferença em meses
+      let months = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
+      months += currentDate.getMonth() - startDate.getMonth();
+      
+      // Ajustar se o dia atual for menor que o dia de início
+      if (currentDate.getDate() < startDate.getDate()) {
+        months--;
+      }
+      
+      // Formatação do texto de duração
+      let durationText;
+      if (months < 1) {
+        // Menos de um mês, mostrar em dias
+        const days = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+        durationText = days === 1 ? '1 day' : days + ' days';
+      } else if (months === 1) {
+        durationText = '1 month';
+      } else if (months < 12) {
+        durationText = months + ' months';
+      } else {
+        const years = Math.floor(months / 12);
+        const remainingMonths = months % 12;
+        
+        if (remainingMonths === 0) {
+          durationText = years === 1 ? '1 year' : years + ' years';
+        } else if (remainingMonths === 1) {
+          durationText = (years === 1 ? '1 year' : years + ' years') + ' and 1 month';
+        } else {
+          durationText = (years === 1 ? '1 year' : years + ' years') + ' and ' + remainingMonths + ' months';
+        }
+      }
+      
+      // Atualizar o elemento HTML
+      document.getElementById('ciandt-duration').textContent = durationText;
+    }
+    
+    // Calcular duração quando a página carregar
+    document.addEventListener('DOMContentLoaded', calculateDuration);
+
+    // Copiar email para a área de transferência
+    document.getElementById('copy-email').addEventListener('click', () => {
+      const email = document.getElementById('copy-email').getAttribute('data-email');
+      navigator.clipboard.writeText(email).then(() => {
+        const notification = document.getElementById('copy-notification');
+        notification.classList.remove('opacity-0');
+        notification.classList.add('opacity-100');
+        setTimeout(() => {
+          notification.classList.remove('opacity-100');
+          notification.classList.add('opacity-0');
+        }, 2000);
+      });
+    });
+
+    // Copiar email do footer para a área de transferência
+    document.getElementById('copy-email-footer').addEventListener('click', () => {
+      const email = document.getElementById('copy-email-footer').getAttribute('data-email');
+      navigator.clipboard.writeText(email).then(() => {
+        const notification = document.getElementById('copy-notification-footer');
+        notification.classList.remove('opacity-0');
+        notification.classList.add('opacity-100');
+        setTimeout(() => {
+          notification.classList.remove('opacity-100');
+          notification.classList.add('opacity-0');
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>
